@@ -40,7 +40,7 @@ Make sure you understand what you are doing. You will never be asked to use real
 
 You must submit the code used to create your token in a code folder located at the root of your repository. You should be careful to comment out your code and to use readable and explicit variable/function names. During your evaluation there will be a code review. You must be very careful about how you demonstrate the operation of your token. You must be able to perform minimalist actions to demonstrate its operation. You need to think about all aspects of security such as ownership or privileges.
 
-You should also put all the things you need for the deployment part of your token in a second folder with the name you want. 
+You should also put all the things you need for the deployment part of your token in a second folder with the name you want.
 
 After deploying your token on a public blockchain. You will define its ticker and publish it on a blockchain explorer (ex: blockscan or bscscan). Please mention the smart contract address and the network used, in your Git repository.
 
@@ -142,7 +142,7 @@ Les tokens non-fongibles ont des caracteristiques qui les rendent differents les
 
 ## Le projet Tokenizer
 
-Dans le cadre du projet Tokenizer, j'ai décidé de créer un NFT sur une blockchain de test similaire à Euthereum. On va donc créer et déployer un smart-contract ERC-721 sur la blockchain de test Sepolia. 
+Dans le cadre du projet Tokenizer, j'ai décidé de créer un NFT sur une blockchain de test similaire à Euthereum. On va donc créer et déployer un smart-contract ERC-721 sur la blockchain de test Sepolia.
 
 Pour pouvoir interagir avec notre smart-contract via une API et avoir du monitoring, on a utilisé [Alchemy](https://alchemy.com). On récupère une API_KEY alchemy en créant une app. Cette clé permet de communiquer avec l'API.
 
@@ -157,6 +157,19 @@ Pour les _**jetons non-fongibles (NFT, uniques et non divisibles),**_ la norme
 [Interface definition of ERC-721](https://eips.ethereum.org/EIPS/eip-721)
 
 On le fait également hériter de l'interface Ownable. Cette classe met en place des règles qui  permettent de restreindre le minage du NFT qu'au détenteur du smart-contract.
+
+
+Une fois le contrat ecrit, on le deploie sur la blockchain. On utilise les fonctionnalites d'Hardat/Ethers pour deployer notre contrat sur la blockchain. On recupere une adresse qui correspond a notre contrat. Elle est utile pour appeler les fonctions de notre contrat.
+
+
+
+
+
+ERC-20 Token : https://docs.alchemy.com/docs/how-to-create-an-erc-20-token-4-steps
+
+
+
+
 
 
 

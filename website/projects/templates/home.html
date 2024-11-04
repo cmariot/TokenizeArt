@@ -1,0 +1,10 @@
+<h1>Home</h1>
+
+<p>Welcome, {{ user.username }}!</p>
+
+<h2>Projects</h2>
+<ul>
+    {% for project in projects|dictsortreversed:"marked_at" %}
+        <li>{{ project.project.name }} - {{ project.grade }} / 100 - {{ project.marked_at }}</li>
+    {% endfor %}
+</ul>

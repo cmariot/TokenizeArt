@@ -1,0 +1,17 @@
+<body>
+    {% include 'projects/templates/navbar.html' %}
+    <main class="container">
+        {% if user.is_authenticated %}
+            {% include 'projects/templates/home.html' %}
+        {% else %}
+        
+            <button onclick="redirectAuth42()">42</button>
+            <script>
+                function redirectAuth42() {
+                    window.location.href = 'https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-7d2567784f1bd041477ba952322085a29939567266edcb51fc310f782e529265&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Faccount%2Flogin&response_type=code';
+                }
+            </script>
+        {% endif %}
+    </main>
+    {% include 'projects/templates/footer.html' %}
+</body>
