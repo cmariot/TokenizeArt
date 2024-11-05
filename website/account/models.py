@@ -7,7 +7,7 @@ class User(AbstractUser):
     id = models.AutoField(primary_key=True, unique=True, editable=False)
     image = models.TextField(null=True, blank=True)
     usual_full_name = models.TextField(null=True, blank=True)
-    wallet = models.TextField(null=True, blank=True)
+    wallet = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.username

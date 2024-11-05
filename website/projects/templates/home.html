@@ -1,41 +1,57 @@
-{% if user.wallet %}
-    <h1>Wallet: {{ user.wallet }}</h1>
-{% else %}
-    <h1>Wallet: Not connected</h1>
-{% endif %}
+{% comment %} Search bar  {% endcomment %}
+<div class="mb-3">
+    <div class="row">
+        <div class="col-12">
+            <form class="d-flex" onsubmit="searchProject()">
+                {% csrf_token %}
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
 
-<a href="{% url 'wallet' user.id %}" class="btn btn-secondary">Connect Wallet</a>
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Project</th>
-            <th scope="col">Grade</th>
-            <th scope="col">Date</th>
-            <th scope="col">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for project in projects|dictsortreversed:"marked_at" %}
+{% if projects %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Project</th>
+                <th scope="col">Grade</th>
+                <th scope="col">Date</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects|dictsortreversed:"marked_at" %}
             <tr>
                 <td>{{ project.project.name }}</td>
                 <td>{{ project.grade }}</td>
                 <td>{{ project.marked_at|date:"m/d/Y" }}</td>
                 <td>
                     <button class="btn btn-secondary" onclick="mintNFT('{{ project.project.name }}')">Mint</button
-                </td>
+                    </td>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <h2>No projects found</h2>
+{% endif %}
 
 <script>
 
-    function mintNFT(project_name) {
-        console.log("Minting NFT for project: " + project_name);
-
+    function searchProject() {
+        event.preventDefault();
+        var search = document.getElementById("search").value;
+        if (search == "") {
+            return;
+        }
+        window.location.href = "{% url 'home' %}?search=" + search;
     }
 
+    function mintNFT(project_name) {
+        event.preventDefault();
+        console.log("Minting NFT for project: " + project_name);
+        window.location.href = "{% url 'mint' %}?project=" + project_name;
+    }
 </script>

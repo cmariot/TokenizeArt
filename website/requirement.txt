@@ -4,3 +4,4 @@ channels==4.1.0
 psycopg2-binary==2.9.9
 django-cors-headers==4.4.0
 requests
+html2image

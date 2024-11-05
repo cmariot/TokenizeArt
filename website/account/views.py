@@ -48,6 +48,7 @@ class Login(RedirectView):
             return super().get(request, *args, **kwargs)
 
         json = req.json()
+        print(json)
 
         username = json['login']
 
@@ -58,6 +59,7 @@ class Login(RedirectView):
                 password="",
                 email=json['email'],
                 usual_full_name=json['usual_full_name'],
+                image=json['image']['link'],
             )
             user.save()
 
@@ -125,6 +127,12 @@ class UpdateWallet(UpdateView):
     success_url = '/'
 
     def form_valid(self, form):
+        # Check if the user is authenticated and if the user is the same
+        if (
+            not self.request.user.is_authenticated or
+            self.request.user != form.instance
+        ):
+            return super().form_invalid(form)
         self.object = form.save(commit=False)
         self.object.wallet = self.object.wallet
         self.object.save()

@@ -41,8 +41,12 @@ def create_pixel_text_image(
 
 
 create_pixel_text_image(
-    "rm -rf /",
-    output_path="rm.png",
+    """
+Project Completion Certification
+This certifies that [user] has successfully completed the project [project_name] with a grade of [project_grade].
+This NFT recognizes the achievement of this project within the 42 school curriculum, reflecting [user]'s skills and dedication.
+""",
+    output_path="certif.png",
     font_path="font.ttf",
     font_size=42
 )

@@ -9,6 +9,9 @@
                 </svg> {% endcomment %}
                 Project 42
             </a>
+            {% if user.is_authenticated %}
+                <a class="nav-link" href={% url "wallet" user.id %}>Set up your wallet</a>
+            {% endif %}
         </span>
         {% if user.is_authenticated %}
             <div class="navbar-nav d-flex gap-3 justify-content-end align-items-center flex-row">
@@ -36,7 +39,6 @@
     }
 
     function logout() {
-        // post request to logout
         fetch('{% url 'logout' %}', {
             method: 'POST',
             headers: {

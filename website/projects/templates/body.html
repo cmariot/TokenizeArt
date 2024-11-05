@@ -4,13 +4,9 @@
         {% if user.is_authenticated %}
             {% include 'projects/templates/home.html' %}
         {% else %}
-        
-            <button onclick="redirectAuth42()">42</button>
-            <script>
-                function redirectAuth42() {
-                    window.location.href = 'https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-7d2567784f1bd041477ba952322085a29939567266edcb51fc310f782e529265&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Faccount%2Flogin&response_type=code';
-                }
-            </script>
+            <h1>Welcome to Project 42</h1>
+            <p>Project 42 is a platform where you can mint NFTs for your projects.</p>
+            <button class="btn btn-secondary" onclick="redirectAuth42()">Login with 42</button>
         {% endif %}
     </main>
     {% include 'projects/templates/footer.html' %}
