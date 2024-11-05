@@ -1,15 +1,12 @@
 from typing import Any
-from django.views.generic.base import TemplateView, RedirectView
+from django.views.generic.base import RedirectView
 from django.contrib.auth.views import LogoutView
+from django.views.generic.edit import UpdateView
 from django.contrib.auth import login, authenticate, logout
 from django.http import HttpRequest, JsonResponse
 import requests
 import os
 from .models import User, Project, UserProject
-
-
-# class Account(TemplateView):
-#     template_name = 'account/templates/account.html'
 
 
 class Login(RedirectView):
@@ -118,3 +115,17 @@ class Logout(LogoutView):
         return JsonResponse({
             'message': 'You have been logged out'
         })
+
+
+class UpdateWallet(UpdateView):
+
+    model = User
+    fields = ['wallet']
+    template_name = 'account/templates/update_wallet.html'
+    success_url = '/'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.wallet = self.object.wallet
+        self.object.save()
+        return super().form_valid(form)

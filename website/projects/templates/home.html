@@ -1,10 +1,41 @@
-<h1>Home</h1>
+{% if user.wallet %}
+    <h1>Wallet: {{ user.wallet }}</h1>
+{% else %}
+    <h1>Wallet: Not connected</h1>
+{% endif %}
 
-<p>Welcome, {{ user.username }}!</p>
+<a href="{% url 'wallet' user.id %}" class="btn btn-secondary">Connect Wallet</a>
 
-<h2>Projects</h2>
-<ul>
-    {% for project in projects|dictsortreversed:"marked_at" %}
-        <li>{{ project.project.name }} - {{ project.grade }} / 100 - {{ project.marked_at }}</li>
-    {% endfor %}
-</ul>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Project</th>
+            <th scope="col">Grade</th>
+            <th scope="col">Date</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for project in projects|dictsortreversed:"marked_at" %}
+            <tr>
+                <td>{{ project.project.name }}</td>
+                <td>{{ project.grade }}</td>
+                <td>{{ project.marked_at|date:"m/d/Y" }}</td>
+                <td>
+                    <button class="btn btn-secondary" onclick="mintNFT('{{ project.project.name }}')">Mint</button
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<script>
+
+    function mintNFT(project_name) {
+        console.log("Minting NFT for project: " + project_name);
+
+    }
+
+</script>
