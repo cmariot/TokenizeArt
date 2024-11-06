@@ -14,7 +14,11 @@
                 <label for="id_wallet" style="display: none;">Your Sepolia wallet address :</label>
                 {% csrf_token %}
 
-                <input class="form-control me-2" type="text" placeholder="0x0000000000000000000000000000000000000000" value="{{ user.wallet }}" name="wallet">
+                <input class="form-control me-2" type="text" placeholder="0x0000000000000000000000000000000000000000" name="wallet" id="id_wallet"
+                {% if user.wallet %}
+                    value="{{ user.wallet }}"
+                {% endif %}
+                >
                 <button class="btn btn-outline-secondary" type="submit">Save</button>
             </form>
         {% else %}
