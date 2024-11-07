@@ -1,6 +1,8 @@
 from typing import Any
 from django.views.generic import TemplateView
 from account.models import UserProject
+from .nft import generate_nft_image
+from .host import host_nft_image_on_ipfs
 
 
 class Home(TemplateView):
@@ -55,14 +57,19 @@ class Mint(TemplateView):
         username = self.request.user.username
         project_name = context['project'].project.name
         project_grade = context['project'].grade
+        date = context['project'].marked_at
+        nft_number = 1
 
         # Generate the NFT image
-
         # Save the NFT image to the project folder
+        filename = generate_nft_image(
+            username, project_name, date,
+            project_grade, nft_number
+        )
 
         # Host the NFT image on IPFS
         # https://docs.pinata.cloud/api-reference/endpoint/upload-a-file
-        image_url = ''
+        image_url = host_nft_image_on_ipfs(filename)
 
         # Generate the NFT metadata
         nft_metadata = {
