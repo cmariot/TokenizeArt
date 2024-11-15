@@ -48,7 +48,7 @@ class Login(RedirectView):
             return super().get(request, *args, **kwargs)
 
         json = req.json()
-        print(json)
+        # print(json)
 
         username = json['login']
 
@@ -69,23 +69,48 @@ class Login(RedirectView):
         projects_users = json['projects_users']
         for project in projects_users:
 
+            project_id = project['project']['id']
             project_name = project['project']['name']
             project_grade = project['final_mark']
             project_status = project['status']
             project_marked_at = project['marked_at']
 
-            print(project, "\n")
+            if project_status != 'finished':
+                continue
+
+            # # GET /v2/projects/{id}
+            # # /v2/projects/:project_id/projects
+            # req = requests.get(
+            #     f"https://api.intra.42.fr/v2/cursus/1/projects",
+            #     headers={
+            #         "Authorization": access_token
+            #     }
+            # )
+
+            # if req.status_code != 200:
+            #     continue
+
+            # print(req.json())
+            # return
+
+            #     try:
+            #         project_description = project_infos['description']
+            #     except KeyError:
+            #         project_infos = "No description"
+            # else:
+            #     project_description = "No description"
+
+            # print(f"{project_name} - {project_description}")
 
             # Check if the project exists in the database
             filtered_project = Project.objects.filter(name=project_name)
             if not filtered_project:
                 _project = Project.objects.create(
-                    name=project_name
+                    name=project_name,
+                    description="No description",
                 )
                 _project.save()
 
-            if project_status != 'finished':
-                continue
 
             _project = Project.objects.filter(name=project_name).first()
             user_project = UserProject.objects.filter(

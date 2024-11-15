@@ -1,0 +1,31 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+{% include "projects/templates/head.html" %}
+
+<body>
+    {% include 'projects/templates/navbar.html' %}
+    <main class="container">
+        <h1>Generate the image for your NFT</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% for field in form %}
+
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}" name="{{ field.html_name }}" value="{{ field.value }}">
+            </div>
+
+            {% endfor %}
+
+            <!-- {{ form.as_p }} -->
+            <button type="submit" class="btn btn-secondary mt-2">Generate</button>
+        </form>
+    </main>
+    {% include 'projects/templates/footer.html' %}
+</body>
+
+</html>

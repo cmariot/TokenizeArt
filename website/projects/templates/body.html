@@ -1,12 +1,12 @@
 <body>
     {% include 'projects/templates/navbar.html' %}
     <main class="container">
-        {% if user.is_authenticated %}
-            {% include 'projects/templates/home.html' %}
+        {% if not user.is_authenticated %}
+        <h1>Welcome to Project 42</h1>
+        <p>Project 42 is a platform where you can mint NFTs for your projects.</p>
+        <button class="btn btn-secondary" onclick="redirectAuth42()">Login with 42</button>
         {% else %}
-            <h1>Welcome to Project 42</h1>
-            <p>Project 42 is a platform where you can mint NFTs for your projects.</p>
-            <button class="btn btn-secondary" onclick="redirectAuth42()">Login with 42</button>
+        {% include 'projects/templates/home.html' %}
         {% endif %}
     </main>
     {% include 'projects/templates/footer.html' %}
