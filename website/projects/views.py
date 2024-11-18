@@ -10,7 +10,7 @@ import os
 import requests
 from account.models import Project
 import json
-
+from django.shortcuts import redirect
 
 class Home(TemplateView):
 
@@ -36,7 +36,7 @@ class CreateNFTImage(FormView):
 
     # Define the form to ask the user for the NFT image description, it will be used to generate the NFT image
     form_class = NFTImageForm
-    success_url = '/'
+    success_url = '/nft/view/'
 
     # Define the template to render the form
     template_name = 'projects/templates/nft_image.html'
@@ -46,6 +46,10 @@ class CreateNFTImage(FormView):
         initial = super().get_initial()
         username = self.request.user.username
         project_name = self.request.GET.get('project')
+        if not project_name or not username:
+            # Redirect to the home page if no project is specified or the user is not authenticated
+            return redirect('home')
+
         initial['nft_prompt'] = 'Create an NFT image that represents the project completion for the 42 school project ' + project_name + ' by ' + username
         return initial
 
@@ -98,7 +102,6 @@ class CreateNFTImage(FormView):
         ####################################
 
         # Host the NFT image on IPFS
-        import requests
 
         # Vos clés Pinata
         PINATA_API_KEY = os.environ.get('PINATA_API_KEY')
@@ -156,13 +159,65 @@ class CreateNFTImage(FormView):
             metadata_ipfs_url = upload_to_pinata(metadata_filename)
 
 
+            # Visualize the NFT image and metadata
+            print(f'NFT metadata uploadée avec succès ! URL IPFS : {metadata_ipfs_url}')
+
+            return super().form_valid(form)
 
         else:
             print("Échec de l'upload.")
 
-
         return super().form_valid(form)
 
+
+class ViewNFTImage(TemplateView):
+
+    template_name = 'projects/templates/view_nft_image.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        username = self.request.user.username
+        project_name = self.request.GET.get('project')
+
+        if not project_name or not username:
+            # Ask the user to specify a file to view
+            redirect('/nft/what/')
+
+
+        context['username'] = username
+        context['project_name'] = project_name
+        return context
+
+    def get(self, request, *args, **kwargs):
+
+        # If user is not authenticated, redirect to the login page
+        if not self.request.user.is_authenticated:
+            return redirect('login')
+
+        # If no nft image has been created, redirect to the nft list page
+        if not os.path.exists(f'{self.request.user.username}_{self.request.GET.get("project")}_nft_image.jpg'):
+            return redirect('home')
+
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+
+
+# class WhatNFTImage(TemplateView):
+
+#         template_name = 'projects/templates/what_nft_image.html'
+
+#         def get_context_data(self, **kwargs):
+#             context = super().get_context_data(**kwargs)
+#             return context
+
+#         def get(self, request, *args, **kwargs):
+#             # If user is not authenticated, redirect to the login page
+#             if not self.request.user.is_authenticated:
+#                 return redirect('login')
+
+#             context = self.get_context_data(**kwargs)
+#             context['message'] = 'Please create an NFT image first'
+#             return self.render_to_response(context)
 
 class Mint(TemplateView):
 

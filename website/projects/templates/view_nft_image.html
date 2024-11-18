@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View NFT Image</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>View NFT Image</h1>
+    </header>
+    <main>
+        <section id="nft-image">
+            <img src="{{ nft_image_url }}" alt="NFT Image">
+        </section>
+        <section id="nft-details">
+            <h2>{{ nft_title }}</h2>
+            <p>{{ nft_description }}</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 NFT Visualize</p>
+    </footer>
+</body>
+</html>
