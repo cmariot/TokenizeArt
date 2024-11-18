@@ -1,35 +1,33 @@
-
 {% load static %}
 
 <!doctype html>
 <html lang="en">
-    {% include "projects/templates/head.html" %}
-    <body>
+{% include "projects/templates/head.html" %}
+
+<body>
     {% include 'projects/templates/navbar.html' %}
     <main class="container">
         {% if user.is_authenticated %}
         <h1>Set up your wallet</h1>
         <p class="mb-1">Your Sepolia wallet address :</p>
-        <form class="d-flex" method="post" action="{% url 'wallet' user.id %}">
-                <label for="id_wallet" style="display: none;">Your Sepolia wallet address :</label>
-                {% csrf_token %}
+        <form class="d-flex" method="post" action="{% url 'wallet' user.id %}?project={{ project_name }}">
+            <label for="id_wallet" style="display: none;">Your Sepolia wallet address :</label>
+            {% csrf_token %}
 
-                <input class="form-control me-2" type="text" placeholder="0x0000000000000000000000000000000000000000" name="wallet" id="id_wallet"
-                {% if user.wallet %}
-                    value="{{ user.wallet }}"
-                {% endif %}
-                >
-                <button class="btn btn-outline-secondary" type="submit">Save</button>
-            </form>
+            <input class="form-control me-2" type="text" placeholder="0x0000000000000000000000000000000000000000"
+                name="wallet" id="id_wallet" {% if user.wallet %} value="{{ user.wallet }}" {% endif %}>
+            <button class="btn btn-outline-secondary" type="submit">Claim your NFT</button>
+        </form>
         {% else %}
-            <button onclick="redirectAuth42()">42</button>
-            <script>
-                function redirectAuth42() {
-                    window.location.href = 'https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-7d2567784f1bd041477ba952322085a29939567266edcb51fc310f782e529265&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Faccount%2Flogin&response_type=code';
-                }
-            </script>
+        <button onclick="redirectAuth42()">42</button>
+        <script>
+            function redirectAuth42() {
+                window.location.href = 'https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-7d2567784f1bd041477ba952322085a29939567266edcb51fc310f782e529265&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Faccount%2Flogin&response_type=code';
+            }
+        </script>
         {% endif %}
     </main>
     {% include 'projects/templates/footer.html' %}
 </body>
+
 </html>

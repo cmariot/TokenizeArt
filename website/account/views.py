@@ -3,10 +3,11 @@ from django.views.generic.base import RedirectView
 from django.contrib.auth.views import LogoutView
 from django.views.generic.edit import UpdateView
 from django.contrib.auth import login, authenticate, logout
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 import requests
 import os
 from .models import User, Project, UserProject
+from django.shortcuts import redirect
 
 
 class Login(RedirectView):
@@ -149,7 +150,7 @@ class UpdateWallet(UpdateView):
     model = User
     fields = ['wallet']
     template_name = 'account/templates/update_wallet.html'
-    success_url = '/'
+    success_url = '/nft/mint/'
 
     def form_valid(self, form):
         # Check if the user is authenticated and if the user is the same
@@ -161,4 +162,24 @@ class UpdateWallet(UpdateView):
         self.object = form.save(commit=False)
         self.object.wallet = self.object.wallet
         self.object.save()
+
+        # Redirect to the mint page with the project name as a query parameter
         return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+        project_name = self.request.GET.get('project')
+        if not project_name:
+            return '/'
+        return super().get_success_url() + f'?project={project_name}'
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['project_name'] = self.request.GET.get('project')
+        return context
+
+
+    # def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+    #     response = super().post(request, *args, **kwargs)
+    #     if self.request.GET.get('project'):
+    #         return redirect('mint') + f'?project={self.request.GET.get("project")}'
+    #     return response

@@ -1,48 +1,27 @@
-<h1> Time to mint your NFT ! </h1>
-
-{% if project %}
-    <h2> Project: {{ project }} </h2>
-
-    <h3>User informations:</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Username</th>
-                <th scope="col">Usual full name</th>
-                <th scope="col">Wallet address</th>
-                <th scope="col">Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ user.username }}</td>
-                <td>{{ user.usual_full_name }}</td>
-                <td>{{ user.wallet }}</td>
-                <td><img src="{{ user.image }}" alt="User image" width="100" height="100"></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h3>Project informations:</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Grade</th>
-                <th scope="col">Marked at</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ project.project.name }}</td>
-                <td>{{ project.grade }}</td>
-                <td>{{ project.marked_at }}</td>
-            </tr>
-        </tbody>
-    </table>
+<!--
+Context :
+'username': user.username,
+'wallet': user.wallet,
+'project_name': project_name,
+'nft_metadata': metadata
+-->
 
 
-{% else %}
-    <h2> No project found </h2>
-{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+{% include 'projects/templates/head.html' %}
 
+<body>
+    {% include 'projects/templates/navbar.html' %}
+    <main class="container">
+    <h1>Success!</h1>
+    <div class=" card" style="width: 18rem;">
+        <img class="card-img-top" src="{{ nft_metadata.image }}" alt="NFT Image">
+        <div class="card-body">
+            <h5 class="card-title text-center">{{ nft_metadata.name }}</h5>
+        </div>
+    </main>
+    {% include 'projects/templates/footer.html' %}
+</body>
+
+</html>

@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View NFT Image</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
-</head>
+{% include 'projects/templates/head.html' %}
+
 <body>
-    <header>
-        <h1>View NFT Image</h1>
-    </header>
-    <main>
-        <section id="nft-image">
-            <img src="{{ nft_image_url }}" alt="NFT Image">
-        </section>
-        <section id="nft-details">
-            <h2>{{ nft_title }}</h2>
-            <p>{{ nft_description }}</p>
-        </section>
+    {% include 'projects/templates/navbar.html' %}
+    <main class="container
+    <div class=" card" style="width: 18rem;">
+        <img class="card-img-top" src="{{ nft_metadata.image }}" alt="NFT Image">
+        <div class="card-body">
+            <h5 class="card-title">{{ nft_metadata.name }}</h5>
+            <p class="card-text">{{ nft_metadata.description }}</p>
+            Add a project parameter to the URL to mint this NFT.
+            <a href="{% url 'wallet' user.id %}?project={{ project_name }}" class="btn btn-secondary">Setup your wallet</a>
+        </div>
+        </div>
     </main>
-    <footer>
-        <p>&copy; 2024 NFT Visualize</p>
-    </footer>
+    {% include 'projects/templates/footer.html' %}
 </body>
+
 </html>

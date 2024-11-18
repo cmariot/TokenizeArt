@@ -17,7 +17,12 @@ const signer = new ethers.Wallet(privateKey, provider);
 
 // Get contract ABI and address
 const abi = contract.abi;
-const contractAddress = "0x98146A6C39cde7D1152597239F05D79C6E19d847";
+const contract_address = require("../contract-address.json");
+if (!contract_address) {
+  throw new Error("Contract address not found");
+}
+
+const contractAddress = contract_address.contractAddress;
 
 // Create a contract instance
 const Gertrude42Contract = new ethers.Contract(contractAddress, abi, signer);
