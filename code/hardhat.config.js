@@ -1,7 +1,7 @@
 require("dotenv").config();
 require("@nomiclabs/hardhat-ethers");
 
-const { API_URL, PRIVATE_KEY } = process.env;
+const { ALCHEMY_URL, METAMASK_PRIVATE_KEY } = process.env;
 
 module.exports = {
   solidity: {
@@ -21,8 +21,8 @@ module.exports = {
   networks: {
     hardhat: {},
     sepolia: {
-      url: API_URL,
-      accounts: [`0x${PRIVATE_KEY}`],
+      url: ALCHEMY_URL,
+      accounts: [`0x${METAMASK_PRIVATE_KEY}`],
     },
   },
 };

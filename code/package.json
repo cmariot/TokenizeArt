@@ -20,7 +20,6 @@
     "@types/chai": "^4.3.20",
     "@types/mocha": "^10.0.9",
     "chai": "^4.5.0",
-    "ethers": "^5.7.2",
     "hardhat": "^2.22.16",
     "hardhat-gas-reporter": "^1.0.10",
     "solidity-coverage": "^0.8.13",
@@ -29,8 +28,9 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-ethers": "^1.0.0",
     "@openzeppelin/contracts": "^5.1.0",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.4"
   }
 }
