@@ -4,12 +4,10 @@ const ethers = require('ethers');
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY;
 const METAMASK_PRIVATE_KEY = process.env.METAMASK_PRIVATE_KEY;
 
-
 // Create an Alchemy Provider using ethers
 const provider = new ethers.AlchemyProvider(
     'sepolia', ALCHEMY_API_KEY
 );
-
 
 // Grab your contract ABI
 const contract = require(
@@ -28,17 +26,41 @@ const signer = new ethers.Wallet(METAMASK_PRIVATE_KEY, provider);
 // Create a contract instance
 const Gertrude42Contract = new ethers.Contract(contractAddress, abi, signer);
 
+
 const main = async () => {
-    const tokenUri = "https://gateway.pinata.cloud/ipfs/QmUnFdjEZhS9zsrKycMNhGs71ejjMvXHPYqvaQ3PJpvgMp";
-    if (!tokenUri) {
-        throw new Error("Token URI not found, please provide the token URI as an argument");
+
+    // Check if the number of arguments is correct (metadata_uri and wallet_address)
+    if (process.argv.length !== 4) {
+        throw new Error("Usage: node mint-nft.js <METADATA_URI> <WALLET_ADDRESS>");
     }
-    // process.exit(1);
-    let nftTxn = await Gertrude42Contract.mintNFT(signer.address, tokenUri);
-    await nftTxn.wait();
+
+    const metadata_uri = process.argv[2];
+    const wallet_address = process.argv[3];
+
+    let nftTxn = await Gertrude42Contract.mintNFT(signer.address, metadata_uri);
+    let transaction_receipt = await nftTxn.wait();
+    console.log("TRANSACTION RESPONSE: ", nftTxn);
+    console.log("TRANSACTION RECEIPT: ", transaction_receipt);
+    // const [transferEvent] = transaction_receipt.events;
+    // console.log("TRANSFER EVENT: ", transferEvent);
+    // const { tokenId } = transferEvent.args;
+    // console.log("TOKEN ID: ", tokenId);
+
+    // If the wallet address is not the same as the signer address, transfer the NFT to the wallet address
+    if (wallet_address !== signer.address) {
+        // TOKEN ID is NOT 0 !!!!!!!!!!
+        // Need to get the tokenId from the event
+
+
+
+        let transferTxn = await Gertrude42Contract.safeTransferFrom(signer.address, wallet_address, 0);
+        await transferTxn.wait();
+    }
+
     console.log(
         `NFT Minted! Check it out at: https://sepolia.etherscan.io/tx/${nftTxn.hash}`
     );
+
 };
 
 main()

@@ -30,6 +30,7 @@ class UserProject(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     grade = models.IntegerField(null=True, blank=True)
     marked_at = models.DateTimeField(null=True, blank=True)
+    ipfs_metadata = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.user} - {self.project}"
