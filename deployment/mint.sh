@@ -13,4 +13,3 @@ cd ../code/scripts
 
 # Mint NFT
 node mint-nft.js $1 $2
-pwd

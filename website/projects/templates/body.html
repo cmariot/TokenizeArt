@@ -2,8 +2,12 @@
     {% include 'projects/templates/navbar.html' %}
     <main class="container">
         {% if not user.is_authenticated %}
-        <h1>Welcome to Project 42</h1>
-        <p>Project 42 is a platform where you can mint NFTs for your projects.</p>
+        <h1>Welcome to NFT42</h1>
+        <p>
+            On this website, you can mint NFTs for your 42 projects.
+            <br />
+            The NFTs certify that you have completed the project.
+        </p>
         <button class="btn btn-secondary" onclick="redirectAuth42()">Login with 42</button>
         {% else %}
         {% include 'projects/templates/home.html' %}

@@ -5,7 +5,6 @@ from django.views.generic.edit import FormView
 from openai import OpenAI
 import os
 import requests
-from account.models import Project
 import json
 from django.shortcuts import redirect
 from django.conf import settings
@@ -33,12 +32,9 @@ class Home(TemplateView):
 
 class CreateNFTImage(FormView):
 
-    # Define the form to ask the user for the NFT image description, it will be used to generate the NFT image
     form_class = NFTImageForm
-    success_url = '/nft/view/'
-
-    # Define the template to render the form
     template_name = 'projects/templates/nft_image.html'
+    success_url = '/nft/view/'
 
 
     def get_initial(self):
@@ -47,7 +43,6 @@ class CreateNFTImage(FormView):
         project_name = self.request.GET.get('project')
         if not project_name or not username:
             return redirect('home')
-
         initial['nft_prompt'] = 'Create an NFT image that represents the project completion for the 42 school project ' + project_name + ' by ' + username
         return initial
 
@@ -59,6 +54,9 @@ class CreateNFTImage(FormView):
 
         nft_prompt = form.cleaned_data['nft_prompt']
         system_prompt = f"Create an NFT image for the 42 project {project_name} with the prompt: {nft_prompt}"
+
+        # Prompts for generating the NFT image
+        # Ecole 42 project completion certificate for the '{project_name}' project
 
         try:
 
@@ -73,11 +71,10 @@ class CreateNFTImage(FormView):
             image_url = response.data[0].url
             print(f'NFT image generated: {image_url}')
             image = requests.get(image_url)
-            filename = f'{settings.STATIC_ROOT}/nft/images/{username}_{project_name}_nft_image.jpg'
+            filename = f'{settings.STATICFILES_DIRS[0]}/nft/images/{username}_{project_name}_nft_image.jpg'
             with open(filename, 'wb') as file:
                 file.write(image.content)
             print(f'NFT image saved: {filename}')
-
 
             # Upload the NFT image to IPFS
             PINATA_API_KEY = os.environ.get('PINATA_API_KEY')
@@ -116,7 +113,7 @@ class CreateNFTImage(FormView):
                 }
 
                 # Save the NFT metadata to the static/metadatas folder
-                metadata_filename = f'{settings.STATIC_ROOT}/nft/metadatas/{username}_{project_name}_nft_metadata.json'
+                metadata_filename = f'{settings.STATICFILES_DIRS[0]}/nft/metadatas/{username}_{project_name}_nft_metadata.json'
                 with open(metadata_filename, 'w') as file:
                     file.write(json.dumps(nft_metadata))
                 print(f'NFT metadata saved: {metadata_filename}')
@@ -185,7 +182,7 @@ class ViewNFTImage(TemplateView):
         context['project_name'] = project_name
 
         # Get the user_project metadata from the file
-        metadata_filename = f'{settings.STATIC_ROOT}/nft/metadatas/{username}_{project_name}_nft_metadata.json'
+        metadata_filename = f'{settings.STATICFILES_DIRS[0]}/nft/metadatas/{username}_{project_name}_nft_metadata.json'
 
         if os.path.exists(metadata_filename):
             with open(metadata_filename, 'r') as file:
@@ -199,7 +196,7 @@ class ViewNFTImage(TemplateView):
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_authenticated:
             return redirect('login')
-        nft_image_filename = f'{settings.STATIC_ROOT}/nft/images/{self.request.user.username}_{self.request.GET.get("project")}_nft_image.jpg'
+        nft_image_filename = f'{settings.STATICFILES_DIRS[0]}/nft/images/{self.request.user.username}_{self.request.GET.get("project")}_nft_image.jpg'
         if not os.path.exists(nft_image_filename):
             return redirect('home')
         context = self.get_context_data(**kwargs)
@@ -232,7 +229,7 @@ class Mint(TemplateView):
         if not user_project:
             return redirect('home')
 
-        nft_metadatas = f'{settings.STATIC_ROOT}/nft/metadatas/{user.username}_{project_name}_nft_metadata.json'
+        nft_metadatas = f'{settings.STATICFILES_DIRS[0]}/nft/metadatas/{user.username}_{project_name}_nft_metadata.json'
 
         if not os.path.exists(nft_metadatas):
             return redirect('home')

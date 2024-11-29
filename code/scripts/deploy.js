@@ -9,11 +9,11 @@ function saveContractAddress(contractName, contractAddress) {
 
 async function main() {
     const [deployer] = await ethers.getSigners();
-    const GER42 = await ethers.getContractFactory("Gertrude42");
-    const Ger42 = await GER42.deploy(deployer.address);
-    await Ger42.deployed();
-    saveContractAddress("Gertrude42", Ger42.address);
-    console.log("Contract deployed to address:", Ger42.address);
+    const NFT42 = await ethers.getContractFactory("NFT42");
+    const Nft42 = await NFT42.deploy(deployer.address);
+    await Nft42.deployed();
+    saveContractAddress("NFT42", Nft42.address);
+    console.log("Contract deployed to address:", Nft42.address);
 }
 
 

@@ -1,21 +1,17 @@
 require("dotenv").config();
 const ethers = require('ethers');
+const contract = require("../artifacts/contracts/NFT42.sol/NFT42.json");
+const contractAddress = require("../contract-address.json").contractAddress;
 
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY;
 const METAMASK_PRIVATE_KEY = process.env.METAMASK_PRIVATE_KEY;
 
 // Create an Alchemy Provider using ethers
 const provider = new ethers.AlchemyProvider(
-    'sepolia', ALCHEMY_API_KEY
-);
-
-// Grab your contract ABI
-const contract = require(
-    "../artifacts/contracts/GER42.sol/Gertrude42.json"
+    "sepolia", ALCHEMY_API_KEY
 );
 const abi = contract.abi;
 
-const contractAddress = require("../contract-address.json").contractAddress;
 if (!contractAddress) {
   throw new Error("Contract address not found");
 }
@@ -24,8 +20,7 @@ if (!contractAddress) {
 const signer = new ethers.Wallet(METAMASK_PRIVATE_KEY, provider);
 
 // Create a contract instance
-const Gertrude42Contract = new ethers.Contract(contractAddress, abi, signer);
-
+const NFT42Contract = new ethers.Contract(contractAddress, abi, signer);
 
 const main = async () => {
 
@@ -37,7 +32,7 @@ const main = async () => {
     const metadata_uri = process.argv[2];
     const wallet_address = process.argv[3];
 
-    let nftTxn = await Gertrude42Contract.mintNFT(signer.address, metadata_uri);
+    let nftTxn = await NFT42Contract.mintNFT(signer.address, metadata_uri);
     let transaction_receipt = await nftTxn.wait();
     console.log("TRANSACTION RESPONSE: ", nftTxn);
     console.log("TRANSACTION RECEIPT: ", transaction_receipt);
@@ -53,7 +48,7 @@ const main = async () => {
 
 
 
-        let transferTxn = await Gertrude42Contract.safeTransferFrom(signer.address, wallet_address, 0);
+        let transferTxn = await NFT42Contract.safeTransferFrom(signer.address, wallet_address, 0);
         await transferTxn.wait();
     }
 
