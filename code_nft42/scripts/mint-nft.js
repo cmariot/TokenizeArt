@@ -7,7 +7,9 @@ const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY;
 const METAMASK_PRIVATE_KEY = process.env.METAMASK_PRIVATE_KEY;
 
 // Create an Alchemy Provider using ethers
-const provider = new ethers.providers.AlchemyProvider("sepolia", ALCHEMY_API_KEY);
+const provider = new ethers.AlchemyProvider(
+    "sepolia", ALCHEMY_API_KEY
+);
 const abi = contract.abi;
 
 if (!contractAddress) {
@@ -32,10 +34,8 @@ const main = async () => {
 
     let nftTxn = await NFT42Contract.mintNFT(signer.address, metadata_uri);
     let transaction_receipt = await nftTxn.wait();
-
-    // console.log("TRANSACTION RESPONSE: ", nftTxn);
-    //console.log("TRANSACTION RECEIPT: ", transaction_receipt);
-
+    console.log("TRANSACTION RESPONSE: ", nftTxn);
+    console.log("TRANSACTION RECEIPT: ", transaction_receipt);
     // const [transferEvent] = transaction_receipt.events;
     // console.log("TRANSFER EVENT: ", transferEvent);
     // const { tokenId } = transferEvent.args;
@@ -44,7 +44,10 @@ const main = async () => {
     // If the wallet address is not the same as the signer address, transfer the NFT to the wallet address
     if (wallet_address !== signer.address) {
         // TOKEN ID is NOT 0 !!!!!!!!!!
-        // Need to get the tokenId from the event ??
+        // Need to get the tokenId from the event
+
+
+
         let transferTxn = await NFT42Contract.safeTransferFrom(signer.address, wallet_address, 0);
         await transferTxn.wait();
     }

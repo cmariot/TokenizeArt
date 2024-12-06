@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "start": "node ./scripts/mint-nft.js" ,
+    "deploy": "npx hardhat run scripts/deploy.js --network sepolia",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,6 +19,11 @@
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@openzeppelin/contracts": "^5.1.0",
     "dotenv": "^16.4.7",
-    "ethers": "^5.7.2"
+    "ethers": "^6.13.4"
+  },
+  "resolutions": {
+    "ws": ">=7.5.10",
+    "elliptic": ">=6.5.7",
+    "cookie": ">=0.7.0"
   }
 }
