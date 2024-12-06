@@ -1,0 +1,39 @@
+{
+  "name": "nft42",
+  "version": "1.0.0",
+  "description": "Deployment of a NFT smart contract on sepolia blockchain",
+  "main": "index.js",
+  "repository": "https://github.com/cmariot/TokenizeArt",
+  "author": "cmariot",
+  "license": "MIT",
+  "scripts": {
+    "compile": "yarn hardhat compile",
+    "deploy": "yarn hardhat ignition deploy ./ignition/modules/NFT42.js --network sepolia",
+    "mint": "yarn hardhat run scripts/mint.js "
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
+    "@nomicfoundation/hardhat-ignition": "^0.15.8",
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.8",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.12",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.12",
+    "@typechain/ethers-v6": "^0.5.1",
+    "@typechain/hardhat": "^9.1.0",
+    "chai": "4",
+    "ethers": "^6.13.4",
+    "hardhat": "^2.22.17",
+    "hardhat-gas-reporter": "^2.2.2",
+    "solidity-coverage": "^0.8.14",
+    "typechain": "^8.3.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.1.0"
+  },
+  "resolutions": {
+    "elliptic": ">=6.5.7",
+    "cookie": ">=0.7.0 ",
+    "ws": ">=8.17.1"
+  }
+}
