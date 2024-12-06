@@ -1,7 +1,24 @@
-const API_URL = process.env.ALCHEMY_URL;
 const API_KEY = process.env.ALCHEMY_API_KEY;
 const PRIVATE_KEY = process.env.METAMASK_PRIVATE_KEY;
-const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
+
+// Get the contract address from the deployed contract file in the ignitions folder
+// ../ignition/deployments/chain-11155111/deployed_addresses.json
+const fs = require('fs');
+const path = require('path');
+
+function getContractAddress(
+    chainId = 11155111,
+    ignitionModule = "NFT42Module",
+    contractName = "NFT42"
+) {
+    const filePath = path.join(__dirname, `../ignition/deployments/chain-${chainId}/deployed_addresses.json`);
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const deployed = JSON.parse(content);
+    const key = `${ignitionModule}#${contractName}`;
+    return deployed[key];
+}
+
+const CONTRACT_ADDRESS = getContractAddress();
 
 // The contract ABI (Application Binary Interface) is the interface to interact
 // with our smart contract
