@@ -15,6 +15,10 @@ function getContractAddress(
     const content = fs.readFileSync(filePath, 'utf-8');
     const deployed = JSON.parse(content);
     const key = `${ignitionModule}#${contractName}`;
+    if (deployed[key] === undefined) {
+        console.error("Contract not deployed");
+        process.exit(1);
+    }
     return deployed[key];
 }
 
@@ -39,12 +43,23 @@ const nft42 = new ethers.Contract(CONTRACT_ADDRESS, contract.abi, signer);
 
 // Now we can interact with our contract by calling its functions
 
-// Mint a new NFT
-const to = "0x9500A4b4164BaDf7d03050112F2cbE1592B7A483";
-const tokenUri = "https://gateway.pinata.cloud/ipfs/QmY2sAjivJSGzsnVJ7AGLSTYKQHA1on8wZB9KrxC6NopkQ";
-async function mintNFT(to, tokenUri) {
-  const transaction = await nft42.mint(to, tokenUri);
-  const tx = await transaction.wait();
-  console.log("NFT minted:", tx);
+async function main() {
+
+    const to = "0xB93805CfF1FC33668fc73C4c2b37C6C3A735c73F";
+    const tokenUri = 'https://gateway.pinata.cloud/ipfs/QmSp4QGZZeKVRaDm6qWTonCpAPAFbG8GgxxwbqWdiEJgxH';
+
+    // Mint a new NFT
+    const transaction = await nft42.mint(to, tokenUri);
+    const tx = await transaction.wait();
+    console.log("NFT minted:", tx);
+    console.log("EtherScan URL:", `https://sepolia.etherscan.io/tx/${tx.hash}`);
+
+    return;
 }
-mintNFT(to, tokenUri);
+
+main()
+    .then(() => process.exit(0))
+    .catch(error => {
+        console.error(error);
+        process.exit(1);
+    });

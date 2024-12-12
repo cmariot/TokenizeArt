@@ -9,7 +9,8 @@
   "scripts": {
     "compile": "yarn hardhat compile",
     "deploy": "yarn hardhat ignition deploy ./ignition/modules/NFT42.js --network sepolia",
-    "mint": "yarn hardhat run scripts/mint.js "
+    "mint": "yarn hardhat run scripts/mint.js",
+    "test": "yarn hardhat test"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",
