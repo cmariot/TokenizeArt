@@ -19,14 +19,6 @@ test:
 	@echo "Smart contract tested successfully!"
 
 
-# Start the website locally
-django:
-	@echo "Starting the website locally..."
-	@cd postgresql && make re &
-	@cd website && source ./env_python.sh
-	@echo "Website started successfully!"
-
-
 fclean:
 	@echo "Cleaning up the project..."
 	@rm -rf code/artifacts code/cache code/node_modules code/yarn.lock

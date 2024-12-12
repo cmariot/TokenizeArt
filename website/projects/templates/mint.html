@@ -4,12 +4,17 @@
 
 <body>
     {% include 'projects/templates/navbar.html' %}
-    <main class="container">
+    <main class="container d-flex align-items-center flex-column">
+
     <h1>Success!</h1>
     <div class=" card" style="width: 18rem;">
         <img class="card-img-top" src="{{ nft_metadatas.image }}" alt="NFT Image">
         <div class="card-body">
             <h5 class="card-title text-center">{{ nft_metadatas.name }}</h5>
+            <p class="card-text text-center">{{ nft_metadatas.description }}</p>
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-secondary" onclick="window.location.href='{{ hash }}'">View on EtherScan</button>
+            </div>
         </div>
     </main>
     {% include 'projects/templates/footer.html' %}

@@ -77,30 +77,10 @@ Pour finir, on a créé une documentation pour expliquer comment utiliser notre 
 
 ## Conclusion
 
-Le projet Tokenizer m'a permis de découvrir le monde des NFT et de la blockchain. J'ai pu apprendre à créer un smart-contract ERC-721 et à le déployer sur une blockchain de test. J'ai pu aussi apprendre à interagir avec un smart-contract en utilisant une API. J'ai pu aussi apprendre à utiliser un wallet pour stocker des cryptomonnaies et à utiliser des faucets pour récupérer des cryptomonnaies sur une blockchain de test. Avec ces cryptomonnaies, j'ai pu déployer mon smart-contract et interagir avec lui.
-
-
-
-
-ERC-20 Token : https://docs.alchemy.com/docs/how-to-create-an-erc-20-token-4-steps
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Le projet TokenizeArt m'a permis de découvrir le monde des NFT et de la blockchain. J'ai pu apprendre à créer un smart-contract ERC-721 et à le déployer sur une blockchain de test. J'ai pu aussi apprendre à interagir avec un smart-contract en utilisant une API. J'ai pu aussi apprendre à utiliser un wallet pour stocker des cryptomonnaies et à utiliser des faucets pour récupérer des cryptomonnaies sur une blockchain de test. Avec ces cryptomonnaies, j'ai pu déployer mon smart-contract et interagir avec lui.
 
 
 ## Liens
 Comprendre le fonctionnement de la Blockchain
 Créer et vendre un NFT : https://docs.alchemy.com/docs/how-to-create-an-nft
+ERC-20 Token : https://docs.alchemy.com/docs/how-to-create-an-erc-20-token-4-steps

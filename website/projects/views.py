@@ -8,6 +8,7 @@ import requests
 import json
 from django.shortcuts import redirect
 from django.conf import settings
+import subprocess
 
 
 class Home(TemplateView):
@@ -48,6 +49,11 @@ class CreateNFTImage(FormView):
 
 
     def form_valid(self, form):
+
+        debug = False
+
+        if debug:
+            return super().form_valid(form)
 
         username = self.request.user.username
         project_name = self.request.GET.get('project')
@@ -245,12 +251,31 @@ class Mint(TemplateView):
 
         if os.path.exists(mint_script):
 
-            # Get the metadata filename from the database
             metadata_url = user_project.ipfs_metadata
             if not metadata_url:
                 return redirect('home')
 
-            # Call this script to mint the NFT in the mint folder
-            os.system(f'cd {mint_script} && yarn hardhat mint --to "{user.wallet}" --uri "{metadata_url}"')
+            command = ['yarn', 'hardhat', 'mint', '--to', f'{user.wallet}', '--uri', f'{metadata_url}']
+
+            try:
+                saved_path = os.getcwd()
+                os.chdir(mint_script)
+                result = subprocess.run(command, text=True, capture_output=True, check=True)
+                output = result.stdout
+                # print("Output de la commande :", output)
+                output = output.split("\n")
+                hash = ""
+                for line in output:
+                    if "hash:" in line:
+                        hash = line.split(": ")[-1]
+                        break
+                hash = hash.replace("'", "")
+                hash = hash.replace(",", "")
+                hash = "https://sepolia.etherscan.io/tx/" + hash
+                context['hash'] = hash
+                os.chdir(saved_path)
+            except subprocess.CalledProcessError as e:
+                print("Erreur lors de l'exécution de la commande :", e.stderr)
+                os.chdir(saved_path)
 
         return self.render_to_response(context)
