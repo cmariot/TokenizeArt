@@ -15,7 +15,7 @@ mint:
 # Launch the test of the smart contract
 test:
 	@echo "Testing the smart contract..."
-	@cd code && yarn test
+	@cd code && yarn && yarn test
 	@echo "Smart contract tested successfully!"
 
 

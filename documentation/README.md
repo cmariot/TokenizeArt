@@ -10,8 +10,6 @@ Le caractère décentralisé de la blockchain est essentiel : au lieu d'être st
 
 Grâce à cette décentralisation et à la distribution des informations sur plusieurs serveurs, chaque transaction est enregistrée de manière immuable. Une fois validée et intégrée dans un bloc, l'information ne peut plus être modifiée.
 
-Pasted image 20241029133410.png
-
 Initialement développée pour faciliter les transactions financières avec le Bitcoin, la technologie blockchain a évolué pour inclure des concepts innovants tels que les smart contracts avec Ethereum. Aujourd'hui, d'autres blockchains émergent, chacune apportant des caractéristiques et des solutions uniques.
 
 Les blockchains partagent plusieurs caractéristiques clés :
@@ -53,9 +51,9 @@ Les tokens fongibles sont des actifs qui ont des caracteristiques et des valeurs
 Les tokens non-fongibles ont des caracteristiques qui les rendent differents les uns des autres, comme par exemple leurs images, leurs token_id ... Ils representent tous quelque chose de different et ont donc des valeurs differentes. On n'echange pas un NFT contre un autre. Ils sont uniques et bases sur la blockchain.
 
 
-## Le projet Tokenizer
+## Le projet TokenizeArt
 
-Dans le cadre du projet Tokenizer, j'ai décidé de créer un NFT sur une blockchain de test similaire à Euthereum. On va donc créer et déployer un smart-contract ERC-721 sur la blockchain de test Sepolia.
+Dans le cadre du projet TokenizeArt, j'ai décidé de créer un NFT sur une blockchain de test similaire à Euthereum. On va donc créer et déployer un smart-contract ERC-721 sur la blockchain de test Sepolia.
 
 Pour pouvoir interagir avec notre smart-contract via une API et avoir du monitoring, on a utilisé [Alchemy](https://alchemy.com). On récupère une API_KEY alchemy en créant une app. Cette clé permet de communiquer avec l'API.
 
@@ -75,12 +73,17 @@ Pour pouvoir interagir avec notre smart-contract, on a utilisé un script en jav
 
 Pour finir, on a créé une documentation pour expliquer comment utiliser notre smart-contract et comment interagir avec lui.
 
+
+## NFT42
+
+NFT42 est un smart-contract deployé sur la blockchain Sepolia. Il permet de créer des NFTs permettant d'attester de la reussite d'un projet dans l'ecole 42 pour chaque etudiant. Il est basé sur la norme ERC-721. Il est composé de plusieurs fonctions qui permettent de créer, de transferer et de recuperer des NFTs.
+
+
 ## Conclusion
 
 Le projet TokenizeArt m'a permis de découvrir le monde des NFT et de la blockchain. J'ai pu apprendre à créer un smart-contract ERC-721 et à le déployer sur une blockchain de test. J'ai pu aussi apprendre à interagir avec un smart-contract en utilisant une API. J'ai pu aussi apprendre à utiliser un wallet pour stocker des cryptomonnaies et à utiliser des faucets pour récupérer des cryptomonnaies sur une blockchain de test. Avec ces cryptomonnaies, j'ai pu déployer mon smart-contract et interagir avec lui.
 
 
 ## Liens
-Comprendre le fonctionnement de la Blockchain
 Créer et vendre un NFT : https://docs.alchemy.com/docs/how-to-create-an-nft
 ERC-20 Token : https://docs.alchemy.com/docs/how-to-create-an-erc-20-token-4-steps
