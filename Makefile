@@ -21,10 +21,8 @@ test:
 
 fclean:
 	@echo "Cleaning up the project..."
-	@rm -rf code/artifacts code/cache code/node_modules code/yarn.lock
+	@rm -rf code/artifacts code/cache code/node_modules code/yarn.lock # code/ignition/deployments
 	@rm -rf website/.venv
-	@rm -rf deployment/build
-	@rm -rf mint/build
 	@echo "Project cleaned up successfully!"
 
 
